@@ -1,0 +1,45 @@
+body {
+	background-image: url("background.png");
+	background-attachment: scroll;
+}
+.zagolovok {
+	text-align: center;
+	font-size: 70px;
+	position: relative;
+  	color: black;
+  	font-family: Courier New, monospace;
+}
+
+.knread {
+	float: center;
+}
+button {
+	color: white;
+	font-size:21px; 
+    text-align:center;
+    text-shadow: #333 0px -1px 0px; 
+	background: #ac4684;
+	/*padding: 3px 7px;*/
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    cursor:pointer;
+    display:block;
+    height:50px;
+    width:220px;
+    /*line-height:70px;*/
+    text-align:center;
+}
+#file {
+	border: 1px solid black;
+	background-color: white;
+	-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+	width: 200px;
+	height: 30px;
+	padding: 5px;
+	display: block;
+	cursor:pointer;
+}
