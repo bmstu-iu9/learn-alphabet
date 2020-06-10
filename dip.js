@@ -2,6 +2,12 @@ var RU = [];
 var KO = [];
 var NU = [];
 
+const TRANSLIT = [
+	{ ru: "A", ko: ["ㅏ"] },
+	{ ru: "Ё", ko: ["ㅕ", "ㅛ"] },
+];
+
+
 RU[0] = "А";
 RU[1] = "Б";
 RU[2] = "В";
@@ -116,8 +122,8 @@ function readFile(object)
 	reader.onload = function() 
 	{
 		// reader.addEventListener("loadend", function());
-	sphrase = reader.result;
-	document.getElementById('out').innerHTML = sphrase;
+		sphrase = reader.result;
+		document.getElementById('out').innerHTML = sphrase;
 	}
 	reader.readAsText(file);
 
@@ -215,8 +221,21 @@ function translit()
 
 		if(KO[i] != 0)
 		{
-			st = part.replace(RU[i], "<span style='color:#f00'><strong>" + KO[i] + "</strong></span>");
-			part = st.replace(RU[i].toLowerCase(), "<span style='color:#f00'><strong>" + KO[i] + "</strong></span>");
+			let res = "";
+			for (let j = 0; j < part.length; /* пусто */)
+			{
+				if (part.substring(j, j + RU[i].length).toUpperCase() == RU[i])
+				{
+					res += "<span style='color:#f00'><strong>" + KO[i] + "</strong></span>";
+					j += RU[i].length;
+				}
+				else
+				{
+					res += part[j];
+					j += 1;
+				}
+			}
+			part = res;
 		}
 
 		
