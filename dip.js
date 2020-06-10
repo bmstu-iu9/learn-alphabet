@@ -220,23 +220,26 @@ function translit()
 			part = sphrase2.substring(i*psize, (i+1)*psize);
 		}
 
-		if(KO[i] != 0)
+		for (let k = 0; k <= i; ++k)
 		{
-			let res = "";
-			for (let j = 0; j < part.length; /* пусто */)
+			if(KO[k] != 0)
 			{
-				if (part.substring(j, j + RU[i].length).toUpperCase() == RU[i])
+				let res = "";
+				for (let j = 0; j < part.length; /* пусто */)
 				{
-					res += "<span style='color:#f00'><strong>" + KO[i] + "</strong></span>";
-					j += RU[i].length;
+					if (part.substring(j, j + RU[k].length).toUpperCase() == RU[k])
+					{
+						res += "<span style='color:#f00'><strong>" + KO[k] + "</strong></span>";
+						j += RU[k].length;
+					}
+					else
+					{
+						res += part[j];
+						j += 1;
+					}
 				}
-				else
-				{
-					res += part[j];
-					j += 1;
-				}
+				part = res;
 			}
-			part = res;
 		}
 
 		
