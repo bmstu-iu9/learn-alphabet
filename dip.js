@@ -123,7 +123,8 @@ function readFile(object)
 	{
 		// reader.addEventListener("loadend", function());
 		sphrase = reader.result;
-		document.getElementById('out').innerHTML = sphrase;
+		document.getElementById('out').innerHTML =
+			sphrase.replace(new RegExp('\n', 'g'), "<br>");
 	}
 	reader.readAsText(file);
 
