@@ -1,11 +1,7 @@
+
 var RU = [];
 var KO = [];
 var NU = [];
-
-const TRANSLIT = [
-	{ ru: "A", ko: ["ㅏ"] },
-	{ ru: "Ё", ko: ["ㅕ", "ㅛ"] },
-];
 
 
 RU[0] = "А";
@@ -69,7 +65,7 @@ KO[13] = "0";
 KO[14] = "ㅁ";
 KO[15] = "ㄴ";
 KO[16] = "ㅇ";
-KO[17] = "ㅓ";
+KO[17] = "ㅓ", "ㅗ";
 KO[18] = "ㅗ";
 KO[19] = "ㅂ";
 KO[20] = "ㄹ";
@@ -117,18 +113,16 @@ function readFile(object)
 	var foundPos;
 	var pos;
 	var tblcont;
+	var big;
 
 
 	reader.onload = function() 
 	{
 		// reader.addEventListener("loadend", function());
-		sphrase = reader.result;
-		document.getElementById('out').innerHTML =
-			sphrase.replace(new RegExp('\n', 'g'), "<br>");
+	sphrase = reader.result;
+	document.getElementById('out').innerHTML = sphrase.replace(new RegExp('\n', 'g'), "<br>");
 	}
 	reader.readAsText(file);
-
-
 	
 
 
@@ -159,6 +153,32 @@ function readFile(object)
 				// return;
 			}
 		}
+
+		for(i=0; i<NU.length; i++)
+		{
+			for(j=0; j<NU.length; j++)
+			{
+				if(i != j)
+				{
+					if(NU[j] < NU[i])
+					{
+						big = NU[j];
+						NU[j] = NU[i];
+						NU[i] = big;
+
+						big = RU[j];
+						RU[j] = RU[i];
+						RU[i] = big;
+
+						big = KO[j];
+						KO[j] = KO[i];
+						KO[i] = big;
+					}
+				}	
+			}
+		}
+
+
 		tblcont = "<tr>";
 		tblcont += "<th>Русский</th>";
 		tblcont += "<th>Количество</th>";
@@ -195,6 +215,7 @@ function translit()
 	var psize = 0;
 	var part;
 	var i;
+	var j;
 	var st;
 
 	psize = parseInt(sphrase.length/parts);
@@ -220,29 +241,18 @@ function translit()
 			part = sphrase2.substring(i*psize, (i+1)*psize);
 		}
 
-		for (let k = 0; k <= i; ++k)
+		for(j=0; j<=i; j++)
 		{
-			if(KO[k] != 0)
+			if(KO[j] != 0)
 			{
-				let res = "";
-				for (let j = 0; j < part.length; /* пусто */)
-				{
-					if (part.substring(j, j + RU[k].length).toUpperCase() == RU[k])
-					{
-						res += "<span style='color:#f00'><strong>" + KO[k] + "</strong></span>";
-						j += RU[k].length;
-					}
-					else
-					{
-						res += part[j];
-						j += 1;
-					}
-				}
-				part = res;
+				st = part.replace(new RegExp(RU[j], 'gi'), "<span style='color:#33f'><strong>" + KO[j] + "</strong></span>");
+				part = st;
 			}
 		}
 
 		
+
+		// transtext.innerHTML += st;
 		transtext.innerHTML += part;
 	}
 
@@ -252,3 +262,6 @@ function translit()
 	// transtext.innerHTML = parts + " " + sphrase.length + " " + psize;
 
 }
+
+		
+
